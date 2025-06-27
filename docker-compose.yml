@@ -1,0 +1,9 @@
+services:
+  db:
+    image: postgres
+    environment:
+      POSTGRES_USER: serafim
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: development
+    ports:
+      - "5432:5432"
