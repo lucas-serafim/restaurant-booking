@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class RestaurantTableService {
@@ -41,5 +42,9 @@ public class RestaurantTableService {
                 current.getCapacity(),
                 current.getStatus()
         )).toList();
+    }
+
+    public void delete(UUID restaurantTableId) {
+        restaurantTableRepository.deleteById(restaurantTableId);
     }
 }

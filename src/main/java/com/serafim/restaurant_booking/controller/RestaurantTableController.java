@@ -1,5 +1,6 @@
 package com.serafim.restaurant_booking.controller;
 
+import com.serafim.restaurant_booking.model.domain.Response.ResponseMessage;
 import com.serafim.restaurant_booking.model.domain.Table.RestaurantTable;
 import com.serafim.restaurant_booking.model.domain.Table.RestaurantTableRequestDTO;
 import com.serafim.restaurant_booking.model.domain.Table.RestaurantTableResponseDTO;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController()
 @RequestMapping("/restaurant-tables")
@@ -28,5 +30,11 @@ public class RestaurantTableController {
     public ResponseEntity<List<RestaurantTableResponseDTO>> findAll() {
         List<RestaurantTableResponseDTO> list = restaurantTableService.findAll();
         return ResponseEntity.ok(list);
+    }
+
+    @DeleteMapping("/{restaurantTableId}")
+    public ResponseEntity<ResponseMessage> delete(@PathVariable UUID restaurantTableId) {
+        restaurantTableService.delete(restaurantTableId);
+        return ResponseEntity.ok(new ResponseMessage("Table deleted successfully."));
     }
 }
