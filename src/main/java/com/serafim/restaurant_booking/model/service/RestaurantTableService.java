@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -44,7 +46,28 @@ public class RestaurantTableService {
         )).toList();
     }
 
+    public RestaurantTableResponseDTO update(UUID restaurantTableId, RestaurantTableRequestDTO dto) {
+        RestaurantTable restaurantTable = this.findById(restaurantTableId);
+
+        restaurantTable.setName(dto.name() != null ? dto.name() : restaurantTable.getName());
+        restaurantTable.setCapacity(dto.capacity() != null ? dto.capacity() : restaurantTable.getCapacity());
+        restaurantTable.setStatus(dto.status() != null ? dto.status() : restaurantTable.getStatus());
+
+        restaurantTableRepository.save(restaurantTable);
+
+        return new RestaurantTableResponseDTO(
+                restaurantTable.getId(),
+                restaurantTable.getName(),
+                restaurantTable.getCapacity(),
+                restaurantTable.getStatus()
+        );
+    }
+
     public void delete(UUID restaurantTableId) {
         restaurantTableRepository.deleteById(restaurantTableId);
+    }
+
+    private RestaurantTable findById(UUID restaurantTableId) {
+        return restaurantTableRepository.findById(restaurantTableId).get();
     }
 }

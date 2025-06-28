@@ -6,10 +6,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import com.serafim.restaurant_booking.model.enums.TableStatusEnum;
+import lombok.Setter;
 
 import java.util.UUID;
 
 @Getter
+@Setter
 @NoArgsConstructor
 @Entity
 @Table(name = "restaurant_table")

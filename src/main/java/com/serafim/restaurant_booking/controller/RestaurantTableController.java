@@ -1,13 +1,11 @@
 package com.serafim.restaurant_booking.controller;
 
 import com.serafim.restaurant_booking.model.domain.Response.ResponseMessage;
-import com.serafim.restaurant_booking.model.domain.Table.RestaurantTable;
 import com.serafim.restaurant_booking.model.domain.Table.RestaurantTableRequestDTO;
 import com.serafim.restaurant_booking.model.domain.Table.RestaurantTableResponseDTO;
 import com.serafim.restaurant_booking.model.service.RestaurantTableService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,6 +28,15 @@ public class RestaurantTableController {
     public ResponseEntity<List<RestaurantTableResponseDTO>> findAll() {
         List<RestaurantTableResponseDTO> list = restaurantTableService.findAll();
         return ResponseEntity.ok(list);
+    }
+
+    @PutMapping("/{restaurantTableId}")
+    public ResponseEntity<RestaurantTableResponseDTO> update(
+            @PathVariable UUID restaurantTableId,
+            @RequestBody RestaurantTableRequestDTO body
+    ) {
+        RestaurantTableResponseDTO restaurantTable = restaurantTableService.update(restaurantTableId, body);
+        return ResponseEntity.ok(restaurantTable);
     }
 
     @DeleteMapping("/{restaurantTableId}")
