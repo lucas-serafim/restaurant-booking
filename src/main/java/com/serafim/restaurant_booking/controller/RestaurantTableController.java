@@ -7,10 +7,9 @@ import com.serafim.restaurant_booking.model.service.RestaurantTableService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController()
 @RequestMapping("/restaurant-tables")
@@ -23,5 +22,11 @@ public class RestaurantTableController {
     public ResponseEntity<RestaurantTableResponseDTO> create(@RequestBody RestaurantTableRequestDTO body) {
         RestaurantTableResponseDTO restaurantTable = restaurantTableService.create(body);
         return ResponseEntity.ok(restaurantTable);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<RestaurantTableResponseDTO>> findAll() {
+        List<RestaurantTableResponseDTO> list = restaurantTableService.findAll();
+        return ResponseEntity.ok(list);
     }
 }
