@@ -11,7 +11,6 @@ import java.util.UUID;
 
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "restaurant_table")
 public class RestaurantTable {
@@ -26,4 +25,10 @@ public class RestaurantTable {
 
     @OneToOne(mappedBy = "restaurantTable", cascade = CascadeType.ALL)
     private Reservation reservation;
+
+    public RestaurantTable(String name, Integer capacity, TableStatusEnum status) {
+        this.name = name;
+        this.capacity = capacity;
+        this.status = status;
+    }
 }

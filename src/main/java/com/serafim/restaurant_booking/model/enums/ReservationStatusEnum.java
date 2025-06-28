@@ -1,13 +1,12 @@
 package com.serafim.restaurant_booking.model.enums;
 
-public enum TableStatusEnum {
-    AVAILABLE("available"),
-    BOOKED("booked"),
-    INACTIVE("inactive");
+public enum ReservationStatusEnum {
+    ACTIVE("active"),
+    CANCELLED("cancelled");
 
     private String role;
 
-    TableStatusEnum(String role) {
+    ReservationStatusEnum(String role) {
         this.role = role;
     }
 

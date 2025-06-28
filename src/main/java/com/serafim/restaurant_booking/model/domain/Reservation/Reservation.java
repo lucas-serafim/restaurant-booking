@@ -2,7 +2,7 @@ package com.serafim.restaurant_booking.model.domain.Reservation;
 
 import com.serafim.restaurant_booking.model.domain.Table.RestaurantTable;
 import com.serafim.restaurant_booking.model.domain.User.User;
-import com.serafim.restaurant_booking.model.enums.ReservationStatus;
+import com.serafim.restaurant_booking.model.enums.ReservationStatusEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -33,5 +33,5 @@ public class Reservation {
     @Column(name = "booked_date")
     private Instant bookedDate;
 
-    private ReservationStatus status;
+    private ReservationStatusEnum status;
 }
