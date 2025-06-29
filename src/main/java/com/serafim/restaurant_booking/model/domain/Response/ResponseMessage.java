@@ -1,4 +1,4 @@
-package com.serafim.restaurant_booking.model.domain.Response;
+package com.serafim.restaurant_booking.model.domain.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

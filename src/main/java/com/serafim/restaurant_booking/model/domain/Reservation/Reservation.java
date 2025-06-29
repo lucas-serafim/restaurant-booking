@@ -1,7 +1,7 @@
-package com.serafim.restaurant_booking.model.domain.Reservation;
+package com.serafim.restaurant_booking.model.domain.reservation;
 
-import com.serafim.restaurant_booking.model.domain.Table.RestaurantTable;
-import com.serafim.restaurant_booking.model.domain.User.User;
+import com.serafim.restaurant_booking.model.domain.table.RestaurantTable;
+import com.serafim.restaurant_booking.model.domain.user.User;
 import com.serafim.restaurant_booking.model.enums.ReservationStatusEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

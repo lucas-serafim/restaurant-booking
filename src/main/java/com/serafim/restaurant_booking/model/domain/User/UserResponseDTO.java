@@ -1,4 +1,4 @@
-package com.serafim.restaurant_booking.model.domain.User;
+package com.serafim.restaurant_booking.model.domain.user;
 
 import com.serafim.restaurant_booking.model.enums.UserRoleEnum;
 

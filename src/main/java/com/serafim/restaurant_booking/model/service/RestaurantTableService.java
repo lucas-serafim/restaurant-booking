@@ -1,15 +1,13 @@
 package com.serafim.restaurant_booking.model.service;
 
-import com.serafim.restaurant_booking.model.domain.Table.RestaurantTable;
-import com.serafim.restaurant_booking.model.domain.Table.RestaurantTableRequestDTO;
-import com.serafim.restaurant_booking.model.domain.Table.RestaurantTableResponseDTO;
+import com.serafim.restaurant_booking.model.domain.table.RestaurantTable;
+import com.serafim.restaurant_booking.model.domain.table.RestaurantTableRequestDTO;
+import com.serafim.restaurant_booking.model.domain.table.RestaurantTableResponseDTO;
 import com.serafim.restaurant_booking.model.repository.RestaurantTableRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service

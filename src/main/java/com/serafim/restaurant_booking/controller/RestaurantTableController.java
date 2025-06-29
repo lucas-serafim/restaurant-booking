@@ -1,8 +1,8 @@
 package com.serafim.restaurant_booking.controller;
 
-import com.serafim.restaurant_booking.model.domain.Response.ResponseMessage;
-import com.serafim.restaurant_booking.model.domain.Table.RestaurantTableRequestDTO;
-import com.serafim.restaurant_booking.model.domain.Table.RestaurantTableResponseDTO;
+import com.serafim.restaurant_booking.model.domain.response.ResponseMessage;
+import com.serafim.restaurant_booking.model.domain.table.RestaurantTableRequestDTO;
+import com.serafim.restaurant_booking.model.domain.table.RestaurantTableResponseDTO;
 import com.serafim.restaurant_booking.model.service.RestaurantTableService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

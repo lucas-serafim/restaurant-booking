@@ -1,9 +1,10 @@
-package com.serafim.restaurant_booking.model.domain.User;
+package com.serafim.restaurant_booking.model.domain.user;
 
-import com.serafim.restaurant_booking.model.domain.Reservation.Reservation;
+import com.serafim.restaurant_booking.model.domain.reservation.Reservation;
 import com.serafim.restaurant_booking.model.enums.UserRoleEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -19,6 +20,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Entity
 @Table(name = "users")
+@EqualsAndHashCode(of = "id")
 public class User implements UserDetails {
 
     @Id
@@ -26,7 +28,7 @@ public class User implements UserDetails {
     private UUID id;
 
     private String name;
-    private String email; // TODO: complex type
+    private String email;
     private String password;
     private UserRoleEnum role;
 

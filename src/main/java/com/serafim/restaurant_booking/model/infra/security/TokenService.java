@@ -4,7 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
-import com.serafim.restaurant_booking.model.domain.User.User;
+import com.serafim.restaurant_booking.model.domain.user.User;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -36,11 +36,15 @@ public class TokenService {
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
 
-            return JWT.require(algorithm)
+            System.out.println("secret: " + secret);
+
+            String email =  JWT.require(algorithm)
                     .withIssuer("auth-api")
                     .build()
                     .verify(token)
                     .getSubject();
+
+            return email;
         } catch (JWTVerificationException exception) {
             return null;
         }
