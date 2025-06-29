@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController()
-@RequestMapping("/restaurant-tables")
+@RequestMapping("/api/v1/restaurant-tables")
 public class RestaurantTableController {
 
     @Autowired

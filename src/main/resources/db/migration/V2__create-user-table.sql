@@ -3,6 +3,6 @@ CREATE TABLE users(
     id UUID UNIQUE PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     email VARCHAR(100) UNIQUE NOT NULL,
-    password VARCHAR(32) NOT NULL,
+    password TEXT NOT NULL,
     role VARCHAR(20) NOT NULL
 );

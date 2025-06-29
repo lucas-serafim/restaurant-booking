@@ -27,23 +27,13 @@ public class RestaurantTableService {
 
         restaurantTableRepository.save(restaurantTable);
 
-        return new RestaurantTableResponseDTO(
-                restaurantTable.getId(),
-                restaurantTable.getName(),
-                restaurantTable.getCapacity(),
-                restaurantTable.getStatus()
-        );
+        return this.toResponseDTO(restaurantTable);
     }
 
     public List<RestaurantTableResponseDTO> findAll() {
         List<RestaurantTable> restaurantTables = restaurantTableRepository.findAll();
 
-        return restaurantTables.stream().map(current -> new RestaurantTableResponseDTO(
-                current.getId(),
-                current.getName(),
-                current.getCapacity(),
-                current.getStatus()
-        )).toList();
+        return restaurantTables.stream().map(this::toResponseDTO).toList();
     }
 
     public RestaurantTableResponseDTO update(UUID restaurantTableId, RestaurantTableRequestDTO dto) {
@@ -55,12 +45,7 @@ public class RestaurantTableService {
 
         restaurantTableRepository.save(restaurantTable);
 
-        return new RestaurantTableResponseDTO(
-                restaurantTable.getId(),
-                restaurantTable.getName(),
-                restaurantTable.getCapacity(),
-                restaurantTable.getStatus()
-        );
+        return this.toResponseDTO(restaurantTable);
     }
 
     public void delete(UUID restaurantTableId) {
@@ -69,5 +54,14 @@ public class RestaurantTableService {
 
     private RestaurantTable findById(UUID restaurantTableId) {
         return restaurantTableRepository.findById(restaurantTableId).get();
+    }
+
+    private RestaurantTableResponseDTO toResponseDTO(RestaurantTable restaurantTable) {
+        return new RestaurantTableResponseDTO(
+                restaurantTable.getId(),
+                restaurantTable.getName(),
+                restaurantTable.getCapacity(),
+                restaurantTable.getStatus()
+        );
     }
 }
