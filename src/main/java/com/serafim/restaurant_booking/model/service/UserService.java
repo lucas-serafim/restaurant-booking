@@ -13,6 +13,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+import java.util.UUID;
+
 @Service
 public class UserService {
     @Autowired
@@ -50,6 +53,11 @@ public class UserService {
         var token = this.tokenService.generateToken((User) auth.getPrincipal());
 
         return new LoginResponseDTO(token);
+    }
+
+    public User findById(UUID userId) {
+       Optional<User> user = this.userRepository.findById(userId);
+       return user.orElse(null);
     }
 
     private UserResponseDTO toResponseDTO(User user) {

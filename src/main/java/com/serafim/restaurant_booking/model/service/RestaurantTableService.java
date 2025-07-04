@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -50,8 +51,13 @@ public class RestaurantTableService {
         restaurantTableRepository.deleteById(restaurantTableId);
     }
 
-    private RestaurantTable findById(UUID restaurantTableId) {
-        return restaurantTableRepository.findById(restaurantTableId).get();
+    public RestaurantTable findById(UUID restaurantTableId) {
+        Optional<RestaurantTable> restaurantTable = restaurantTableRepository.findById(restaurantTableId);
+        return restaurantTable.orElse(null);
+    }
+
+    public void update(RestaurantTable restaurantTable) {
+        restaurantTableRepository.save(restaurantTable);
     }
 
     private RestaurantTableResponseDTO toResponseDTO(RestaurantTable restaurantTable) {

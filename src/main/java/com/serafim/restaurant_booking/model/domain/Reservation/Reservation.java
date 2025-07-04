@@ -34,4 +34,11 @@ public class Reservation {
     private Instant bookedDate;
 
     private ReservationStatusEnum status;
+
+    public Reservation(User user, RestaurantTable restaurantTable, Instant bookedDate, ReservationStatusEnum status) {
+        this.user = user;
+        this.restaurantTable = restaurantTable;
+        this.bookedDate = bookedDate;
+        this.status = status;
+    }
 }
