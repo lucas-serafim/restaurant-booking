@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -28,17 +29,11 @@ public class ReservationService {
     @Autowired
     private ReservationRepository reservationRepository;
 
-    public ReservationResponseDTO create(UUID userId, UUID tableId, ReservationRequestDTO dto) {
+    public ReservationResponseDTO create(User user, UUID tableId, ReservationRequestDTO dto) {
         Instant now = Instant.now();
 
         if (dto.bookedDate().isBefore(now)) {
             throw new IllegalArgumentException("Booked date must be a future date.");
-        }
-
-        User user = this.userService.findById(userId);
-
-        if (user == null) {
-            throw new NotFoundException("User not found. Id: " + userId);
         }
 
         RestaurantTable table = this.tableService.findById(tableId);
@@ -63,8 +58,23 @@ public class ReservationService {
 
         return new ReservationResponseDTO(
                 reservation.getId(),
-                userId,
+                user.getId(),
                 tableId,
+                reservation.getBookedDate(),
+                reservation.getStatus()
+        );
+    }
+
+    public List<ReservationResponseDTO> getReservationsByUserId(UUID userId) {
+        List<Reservation> reservationList =  this.reservationRepository.findAllByUserId(userId);
+        return reservationList.stream().map(this::toResponseDTO).toList();
+    }
+
+    public ReservationResponseDTO toResponseDTO(Reservation reservation) {
+        return new ReservationResponseDTO(
+                reservation.getId(),
+                reservation.getUser().getId(),
+                reservation.getRestaurantTable().getId(),
                 reservation.getBookedDate(),
                 reservation.getStatus()
         );
