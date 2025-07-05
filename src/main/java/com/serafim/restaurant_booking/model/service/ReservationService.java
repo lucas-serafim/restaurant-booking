@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -65,9 +66,28 @@ public class ReservationService {
         );
     }
 
-    public List<ReservationResponseDTO> getReservationsByUserId(UUID userId) {
-        List<Reservation> reservationList =  this.reservationRepository.findAllByUserId(userId);
+    public List<ReservationResponseDTO> getReservations(UUID userId) {
+        List<Reservation> reservationList = this.reservationRepository.findAllByUserId(userId);
         return reservationList.stream().map(this::toResponseDTO).toList();
+    }
+
+    public void cancel (UUID reservationId) {
+        Reservation reservation = this.findById(reservationId);
+
+        if (reservation == null) throw new NotFoundException("Reservation not found. Id: " + reservationId);
+
+        reservation.setStatus(ReservationStatusEnum.CANCELLED);
+
+        RestaurantTable restaurantTable = reservation.getRestaurantTable();
+        restaurantTable.setStatus(TableStatusEnum.AVAILABLE);
+
+        this.reservationRepository.save(reservation);
+        this.tableService.update(restaurantTable);
+    }
+
+    public Reservation findById(UUID reservationId) {
+        Optional<Reservation> reservation = this.reservationRepository.findById(reservationId);
+        return reservation.orElse(null);
     }
 
     public ReservationResponseDTO toResponseDTO(Reservation reservation) {

@@ -6,6 +6,7 @@ import com.serafim.restaurant_booking.model.domain.user.User;
 import com.serafim.restaurant_booking.model.service.ReservationService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,18 +21,28 @@ public class ReservationController {
     private ReservationService reservationService;
 
     @PostMapping("/restaurant-tables/{tableId}")
-    public ReservationResponseDTO create(
+    public ResponseEntity<ReservationResponseDTO> create(
             @PathVariable UUID tableId,
             @RequestBody ReservationRequestDTO body,
             Authentication authentication
     ) {
         User user = (User) authentication.getPrincipal();
-        return this.reservationService.create(user, tableId, body);
+        ReservationResponseDTO responseDTO = this.reservationService.create(user, tableId, body);
+
+        return ResponseEntity.ok(responseDTO);
     }
 
     @GetMapping()
-    public List<ReservationResponseDTO> getReservationsByUserId(Authentication authentication) {
+    public ResponseEntity<List<ReservationResponseDTO>> getReservations(Authentication authentication) {
         User user = (User) authentication.getPrincipal();
-        return this.reservationService.getReservationsByUserId(user.getId());
+        List<ReservationResponseDTO> list = this.reservationService.getReservations(user.getId());
+
+        return ResponseEntity.ok(list);
+    }
+
+    @PutMapping("/{reservationId}/cancel")
+    public ResponseEntity<Void> cancel(@PathVariable() UUID reservationId) {
+        this.reservationService.cancel(reservationId);
+        return ResponseEntity.noContent().build();
     }
 }

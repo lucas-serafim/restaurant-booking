@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import com.serafim.restaurant_booking.model.enums.TableStatusEnum;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -24,8 +26,8 @@ public class RestaurantTable {
     private Integer capacity;
     private TableStatusEnum status;
 
-    @OneToOne(mappedBy = "restaurantTable", cascade = CascadeType.ALL)
-    private Reservation reservation;
+    @OneToMany(mappedBy = "restaurantTable", cascade = CascadeType.ALL)
+    private List<Reservation> reservation = new ArrayList<>();
 
     public RestaurantTable(String name, Integer capacity, TableStatusEnum status) {
         this.name = name;
