@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -51,10 +52,19 @@ public class ReservationService {
             throw new RestaurantTableException("Table capacity out of bounds.");
         }
 
-        table.setStatus(TableStatusEnum.BOOKED);
+        Instant startTime = dto.bookedDate();
+        Instant endTime = startTime.plus(1, ChronoUnit.HOURS);
+        Instant startTimeMinus1Hour = startTime.minus(1, ChronoUnit.HOURS);
+
+        boolean isAlreadyBooked = reservationRepository.existsReservationInPeriod(tableId, startTimeMinus1Hour, endTime);
+        System.out.println("isAlreadyBooked: " + isAlreadyBooked);
+
+        if (isAlreadyBooked) {
+            throw new RestaurantTableException("Table is already booked for this date time.");
+        }
+
         Reservation reservation = new Reservation(user, table, dto.bookedDate(), ReservationStatusEnum.ACTIVE);
 
-        tableService.update(table);
         reservationRepository.save(reservation);
 
         return new ReservationResponseDTO(
@@ -71,10 +81,12 @@ public class ReservationService {
         return reservationList.stream().map(this::toResponseDTO).toList();
     }
 
-    public void cancel (UUID reservationId) {
+    public void cancel (UUID reservationId, User user) {
         Reservation reservation = this.findById(reservationId);
 
-        if (reservation == null) throw new NotFoundException("Reservation not found. Id: " + reservationId);
+        if (reservation == null || reservation.getUser().getId() != user.getId()) {
+            throw new NotFoundException("Reservation not found. Id: " + reservationId);
+        }
 
         reservation.setStatus(ReservationStatusEnum.CANCELLED);
 

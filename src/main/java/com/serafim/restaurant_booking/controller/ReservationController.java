@@ -41,8 +41,10 @@ public class ReservationController {
     }
 
     @PutMapping("/{reservationId}/cancel")
-    public ResponseEntity<Void> cancel(@PathVariable() UUID reservationId) {
-        this.reservationService.cancel(reservationId);
+    public ResponseEntity<Void> cancel(@PathVariable() UUID reservationId, Authentication authentication) {
+        User user = (User) authentication.getPrincipal();
+
+        this.reservationService.cancel(reservationId, user);
         return ResponseEntity.noContent().build();
     }
 }

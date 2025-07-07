@@ -29,14 +29,18 @@ public class SecurityConfiguration {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST, "/api/v1/restaurant-tables").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.GET, "/api/v1/restaurant-tables").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/v1/restaurant-tables").permitAll()
                         .requestMatchers(HttpMethod.PATCH, "/api/v1/restaurant-tables").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/api/v1/restaurant-tables").hasRole("ADMIN")
 
                         .requestMatchers(HttpMethod.POST, "/api/v1/users/register").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/v1/users/login").permitAll()
 
-                        .anyRequest().permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/v1/reservations").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/reservations").permitAll()
+                        .requestMatchers(HttpMethod.PUT, "/api/v1/reservations").permitAll()
+
+                        .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();

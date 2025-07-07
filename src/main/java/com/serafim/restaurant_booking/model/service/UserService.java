@@ -5,6 +5,7 @@ import com.serafim.restaurant_booking.model.domain.authorization.LoginResponseDT
 import com.serafim.restaurant_booking.model.domain.user.User;
 import com.serafim.restaurant_booking.model.domain.user.UserRequestDTO;
 import com.serafim.restaurant_booking.model.domain.user.UserResponseDTO;
+import com.serafim.restaurant_booking.model.enums.UserRoleEnum;
 import com.serafim.restaurant_booking.model.infra.security.TokenService;
 import com.serafim.restaurant_booking.model.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +39,7 @@ public class UserService {
                 dto.name(),
                 dto.email(),
                 encryptedPassword,
-                dto.role()
+                UserRoleEnum.CUSTOMER
         );
 
         this.userRepository.save(user);
